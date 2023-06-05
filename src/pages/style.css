@@ -1,0 +1,42 @@
+.home{
+    display: flex;
+    
+}
+.home__content{
+    font-size: 45px;
+    margin-top: 100px;    
+    margin-left: 80px;
+}
+.home__image{
+    width: 550px;
+    position: absolute;
+    right: 0;
+}
+p{
+    margin-top: 20px;
+    margin-left: 80px;
+    font-size: 20px;
+    
+    
+}
+@media screen and (max-width: 900px){
+.home{
+    display: flex;
+    flex-direction: column-reverse;
+    
+}
+.home__image{
+    margin: auto;
+    width: 100%;
+}
+.home__content{
+    font-size: 40px;
+    
+}
+p{
+    font-size: 15px;
+    
+
+}
+
+}
