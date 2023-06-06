@@ -36,11 +36,16 @@ export default function SignupPage(){
             name,email,password
         })
         let  {message,status} = data.data
+        
         if(status==1){
             toast.success('User created successfully')
             nav("/login")
             localStorage.setItem('userInfo', JSON.stringify(data))
-        }else{
+        }
+       else if(email === "" && name="" && password = ""){
+            toast.error('Something went wrong')
+        }
+        else{
             toast.error('Enter correct credentials')
         }
     }
