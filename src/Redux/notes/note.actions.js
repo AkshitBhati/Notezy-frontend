@@ -21,7 +21,7 @@ export const getNotes=()=>async(dispatch)=>{
         })
 
         const {status,message,data} = res.data
-        console.log(message)
+        
         if(status==1){
             
         dispatch({type:GET_NOTES_SUCCESS,payload:data})
@@ -135,7 +135,7 @@ export const updateNotes=(id,obj)=>async(dispatch)=>{
         })
 
         const {status,message} = res.data
-        console.log(message)
+        
         if(status==1){
             
         dispatch({type:UPDATE_NOTES_SUCCESS})
