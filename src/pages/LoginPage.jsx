@@ -45,6 +45,10 @@ export default function LoginPage() {
     }
   }
 
+    const guestLogin = () => {
+      setEmail('akshitworks24@gmail.com')
+      setPassword('akshit')
+    }
 
 
   return (
@@ -87,16 +91,27 @@ export default function LoginPage() {
                 align={'start'}
                 justify={'space-between'}>
 
-                <Link color={'blue.400'} onClick={() => nav('/register')}>Signup?</Link>
+                <Link marginBottom={"-20px"} color={'blue.400'} onClick={() => nav('/register')}>Signup?</Link>
               </Stack>
               <Button
                 onClick={handleLogin}
                 bg={'blue.400'}
                 color={'white'}
+                marginBottom="-20px"
                 _hover={{
                   bg: 'blue.500',
                 }}>
-                Sign in
+                Log in
+              </Button>
+              <Button 
+              bg={'blue.400'}
+              color={'#fff'}
+              _hover={{
+                bg:'blue.500'
+              }}
+              onClick={guestLogin}
+              > 
+                Guest Credentials
               </Button>
             </Stack>
           </Stack>
