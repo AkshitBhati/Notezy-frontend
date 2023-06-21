@@ -10,23 +10,27 @@ import {
   ModalContent,
   ModalHeader,
   ModalFooter,
-  
   ModalBody,
   ModalCloseButton,
 } from "@chakra-ui/react";
 import { toast } from "react-toastify";
+import { ChromePicker } from 'react-color';
+import { IoMdColorPalette } from "react-icons/io";
+
+
 export default function NotesPage() {
   const dispatch = useDispatch();
   const { loading, error, data } = useSelector((state) => state.noteReducer);
-  const { toggleColorMode } = useColorMode()
-  const bg = useColorModeValue("#ACBCFF" , "#E57C23")
+  const { toggleColorMode } = useColorMode();
   const [notes, setNotes] = useState([]);
-  const { isOpen, onOpen, onClose } = useDisclosure()
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
-  const initialRef = useRef(null)
-  const finalRef = useRef(null)
-  const [title,setTitle] = useState("")
-  const [body,setBody] = useState("")
+  const initialRef = useRef(null);
+  const finalRef = useRef(null);
+  const [title, setTitle] = useState("");
+  const [body, setBody] = useState("");
+  const [noteColor, setNoteColor] = useState("#ACBCFF");
+  const [isColorPickerOpen, setColorPickerOpen] = useState(false);
 
   useEffect(() => {
     dispatch(getNotes());
@@ -36,33 +40,39 @@ export default function NotesPage() {
     setNotes(data);
   }, [data]);
 
-  const createNote =()=>{
-    if(body === ""){
-      toast.error('Enter valid details')
+  const createNote = () => {
+    if (body === "") {
+      toast.error("Enter valid details");
+    } else {
+      dispatch(createNotes({ title, body, color: noteColor }));
+      toast.success("Note created successfully");
+      onClose();
+      setTitle("");
+      setBody("");
     }
-    else{
+  };
 
-      dispatch(createNotes({title,body}))
-      toast.success('note created successfully')
-      onClose()
-      setTitle("")
-      setBody("")
-    }
-  }
+  const handleColorChange = (color) => {
+    setNoteColor(color.hex);
+  };
+
+  const toggleColorPicker = () => {
+    setColorPickerOpen(!isColorPickerOpen);
+  };
 
   return (
     <Box mt={20} padding={8} >
-     <Box
-  display="grid"
-  gridGap={10}
-  w="90%"
-  margin="auto"
-  gridTemplateColumns={{ sm: "1fr", md: "repeat(2, 1fr)", lg: "repeat(4, 1fr)" }}
->
-  {notes?.map((el) => (
-    <NoteCard {...el} />
-  ))}
-</Box>
+      <Box
+        display="grid"
+        gridGap={10}
+        w="90%"
+        margin="auto"
+        gridTemplateColumns={{ sm: "1fr", md: "repeat(2, 1fr)", lg: "repeat(4, 1fr)" }}
+      >
+        {notes?.map((el) => (
+          <NoteCard {...el} color={noteColor} />
+        ))}
+      </Box>
 
       <>
         <IconButton
@@ -73,7 +83,7 @@ export default function NotesPage() {
           w={"80px"}
           h={"80px"}
           borderRadius={50}
-          bg={bg}
+          bg={noteColor}
           bottom={0}
           right={0}
           onClick={onOpen}
@@ -81,23 +91,38 @@ export default function NotesPage() {
           icon={<BsPlusLg />}
         ></IconButton>
 
-      
-
         <Modal
+          bg={"red"}
           initialFocusRef={initialRef}
           finalFocusRef={finalRef}
           isOpen={isOpen}
           onClose={onClose}
         >
           <ModalOverlay />
-          <ModalContent>
+          <ModalContent backgroundColor={noteColor}>
             <ModalHeader>Create New Note</ModalHeader>
             <ModalCloseButton />
             <ModalBody pb={6}>
-
-                <Input value={title}m placeholder="Please enter title" onChange={(e)=>setTitle(e.target.value)}></Input>
-                <Textarea mt={8} value={body} placeholder={'Please enter description'} onChange={(e)=>setBody(e.target.value)}></Textarea>
-              
+              <Input
+                value={title}
+                placeholder="Please enter title"
+                onChange={(e) => setTitle(e.target.value)}
+              />
+              <Textarea
+                mt={8}
+                value={body}
+                placeholder={"Please enter description"}
+                onChange={(e) => setBody(e.target.value)}
+              />
+              <div
+                style={{ display: "flex", alignItems: "center", marginBottom: "8px" }}
+                onClick={toggleColorPicker}
+              >
+                <IoMdColorPalette style={{fontSize:"35px"}} />
+                {isColorPickerOpen && (
+                  <ChromePicker color={noteColor} onChange={handleColorChange} />
+                )}
+              </div>
             </ModalBody>
 
             <ModalFooter>
