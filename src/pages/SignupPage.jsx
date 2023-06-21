@@ -36,16 +36,11 @@ export default function SignupPage(){
             name,email,password
         })
         let  {message,status} = data.data
-        
         if(status==1){
             toast.success('User created successfully')
             nav("/login")
             localStorage.setItem('userInfo', JSON.stringify(data))
-        }
-       else if(email === "" && name="" && password = ""){
-            toast.error('Something went wrong')
-        }
-        else{
+        }else{
             toast.error('Enter correct credentials')
         }
     }
@@ -101,14 +96,15 @@ export default function SignupPage(){
                 align={'start'}
                 justify={'space-between'}>
               </Stack>
-              <Box textDecoration={'underline'} cursor={'pointer'} mt={'-25px'} onClick={() => nav('/login')} color={'blue.300'}>Login?</Box>
+              <Box marginBottom={'-20px'} textDecoration={'underline'} cursor={'pointer'} mt={'-25px'} onClick={() => nav('/login')} color={'blue.300'}>Login?</Box>
               <Button
               onClick={handleSignup}
                 bg={'blue.400'}
                 color={'white'}
                 _hover={{
                   bg: 'blue.500',
-                }}>
+                }}
+                >
                 Sign up
               </Button>
             </Stack>
