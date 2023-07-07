@@ -1,6 +1,6 @@
 import AllRoutes from './routes/AllRoutes';
 import { Navbar } from './components/Homepage/Navbar';
-import { ToastContainer } from "react-toastify";
+import { Toaster } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 
